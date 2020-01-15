@@ -1,0 +1,145 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>Streaming</groupId>
+  <artifactId>SparkJob</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>SparkJob</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.17</version>
+    </dependency>
+    
+    <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-core_2.11</artifactId>
+            <version>2.3.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-sql_2.11</artifactId>
+            <version>2.3.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-streaming_2.11</artifactId>
+            <version>2.3.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-streaming-kafka-0-10_2.11</artifactId>
+            <version>2.3.2</version>
+        </dependency>
+  </dependencies>
+  
+  
+  <build>
+  <finalName>Canonical_spark_training</finalName>
+  <plugins>
+  <plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>1.4</version>
+				<configuration>
+					<createDependencyReducedPom>true</createDependencyReducedPom>
+					<filters>
+						<filter>
+							<artifact>*:*</artifact>
+							<excludes>
+								<exclude>META-INF/*.SF</exclude>
+								<exclude>META-INF/*.DSA</exclude>
+								<exclude>META-INF/*.RSA</exclude>
+								<exclude>com/lucidworks/spark/example/**</exclude>
+								<exclude>breeze/**</exclude>
+								<exclude>scala/**</exclude>
+								<exclude>parquet/**</exclude>
+								<exclude>javassist/**</exclude>
+								<!-- <exclude>javax/**</exclude> -->
+								<exclude>edu/**</exclude>
+								<exclude>jersey/**</exclude>
+								<exclude>org/antlr/**</exclude>
+								<exclude>org/codehaus/**</exclude>
+								<exclude>org/datanucleus/**</exclude>
+								<exclude>org/glassfish/**</exclude>
+								<exclude>org/jboss/**</exclude>
+								<exclude>org/joda/**</exclude>
+								<exclude>org/json4s/**</exclude>
+								<exclude>org/mortbay/**</exclude>
+								<exclude>org/netlib/**</exclude>
+								<exclude>org/restlet/**</exclude>
+								<exclude>org/xerial/**</exclude>
+								<exclude>org/apache/lucene/**</exclude>
+								<exclude>org/apache/hadoop/**</exclude>
+								<exclude>org/apache/arrow/**</exclude>
+								<exclude>org/apache/avro/**</exclude>
+								<exclude>org/apache/calcite/**</exclude>
+								<exclude>org/apache/hadoop/**</exclude>
+								<exclude>org/scalatest/**</exclude>
+								<exclude>org/spark_project/**</exclude>
+								<exclude>spire/**</exclude>
+							</excludes>
+						</filter>
+					</filters>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+
+
+							<excludes>
+								<exclude>com/lucidworks/spark/example/**</exclude>
+							</excludes>
+
+							<transformers>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<mainClass></mainClass>
+								</transformer>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.IncludeResourceTransformer">
+									<resource>src/main/resources/patterns</resource>
+									<file>*</file>
+								</transformer>
+							</transformers>
+						</configuration>
+					</execution>
+				</executions>
+			
+  
+  
+  
+  </plugin>
+  
+  
+  </plugins>
+  
+  </build>
+    
+</project>
